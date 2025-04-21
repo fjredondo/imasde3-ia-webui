@@ -96,8 +96,8 @@ services:
 #       - 7700:7700
 
 # # USE RAG API IMAGE WITH LOCAL EMBEDDINGS SUPPORT
-#  rag_api:
-#    image: ghcr.io/danny-avila/librechat-rag-api-dev:latest
+  rag_api:
+    image: ghcr.io/danny-avila/librechat-rag-api-dev:latest
 # # For Linux user: 
 #    extra_hosts:
 #      - "host.docker.internal:host-gateway"
@@ -115,6 +115,13 @@ services:
       - "11434:11434"
     volumes:
       - ./ollama:/root/.ollama
+      - type: bind
+        source: ./ollama_models
+        target: /tmp/.ollama_models
+#    post_start:
+#      - command: |
+#          cd /tmp/.ollama_models &&
+#          ollama create gemma3 -f modelfile_gemma3
 
 # # ADD LITELLM BASIC - NEED TO CONFIGURE litellm-config.yaml, ONLY NEED ENV TO ENABLE REDIS FOR CACHING OR LANGFUSE FOR MONITORING
 #  litellm:
